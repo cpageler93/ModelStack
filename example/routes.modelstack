@@ -1,0 +1,12 @@
+scope path: 'api' do
+
+  resources :users do
+    action :me
+    resources :sessions
+  end
+
+  resources :groups do
+    resources :users
+  end
+
+end

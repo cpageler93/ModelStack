@@ -1,0 +1,58 @@
+#!/usr/bin/env ruby
+$LOAD_PATH.push File.expand_path('../../lib', __FILE__)
+
+require 'modelstack'
+require 'commander'
+require 'terminal-table'
+
+class ModelStackApplication
+  include Commander::Methods
+
+  def run
+    program :version, ModelStack::VERSION
+    program :description, "CLI for 'modelstack' - Generates code for server and client applications"
+    program :help, 'Author', 'Christoph Pageler <christoph.pageler@me.com>'
+    program :help, 'Website', 'http://christophpageler.de'
+    program :help, 'GitHub', 'https://github.com/cpageler93/ModelStack'
+    program :help_formatter, :compact
+
+    global_option('--verbose') { $verbose = true }
+    global_option('--debug') { $debug = true }
+
+    always_trace!
+
+    command :generate do |c|
+
+      c.action do |args, options|
+
+        exec = Proc.new do
+
+          ModelStack::ModelStackFile.generate({
+            modelstack_filename: nil
+          });
+
+        end
+
+        if $debug
+          exec.call
+        else
+          begin
+            exec.call
+          rescue Exception => ex
+            puts ex.message.red
+          end
+        end
+
+      end
+    end
+
+    default_command :generate
+
+    run!
+  end
+end
+
+begin
+  ModelStackApplication.new.run
+ensure
+end
