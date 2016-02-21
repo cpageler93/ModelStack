@@ -20,19 +20,14 @@ module ModelStack
     ###########################
 
     def read_file(relative_filename)
-
       modelstack_filename_dir = File.dirname(self.modelstack_filename)
       absolute_filename = File.join(modelstack_filename_dir, relative_filename)
-
-      puts "handle read_file #{absolute_filename}".yellow
 
       modelstack_file = ModelStackFile.new(generator: self.generator, modelstack_filename: absolute_filename)
       modelstack_file.read_file_content
     end
 
     def read_absolute_file(modelstack_filename)
-      puts "read file content for #{modelstack_filename}".green
-
       content = File.read(modelstack_filename)
 
       # check content
@@ -69,19 +64,22 @@ module ModelStack
     end
 
     def name(name)
-      puts "handle name #{name}".yellow
+      self.generator.name = name
     end
 
     def default_attributes(&block)
-      puts "handle default_attributes #{block}".yellow
+      ModelStackFileDslMethods::DefaultAttributes.handle(self.generator, block)
     end
 
     def default_primary_key(default_primary_key)
-      puts "handle default_primary_key #{default_primary_key}".yellow
+      ModelStackFileDslMethods::DefaultPrimaryKey.handle(self.generator, default_primary_key)
     end
 
-    def model(model_name, &block)
-      puts "handle model #{model_name} with block #{block}".yellow
+    def model(model_identifier, &block)
+      model = ModelStackFileDslMethods::Model.handle(self.generator, model_identifier, block)
+
+      self.generator.models ||= []
+      self.generator.models << model
     end
 
     def scope(options, &block)

@@ -17,6 +17,9 @@ module ModelStack
 
       modelstack_file = ModelStackFile.new(options)
       modelstack_file.read_file_content
+
+      modelstack_file.generate
+
       return modelstack_file
     end
 
@@ -42,6 +45,10 @@ module ModelStack
       self.generator.add_modelstack_file(self.modelstack_filename)
 
       ModelStackFileDsl.new(self.generator, self.modelstack_filename)
+    end
+
+    def generate
+      self.generator.generate
     end
 
   end
