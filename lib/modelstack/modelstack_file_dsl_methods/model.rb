@@ -12,6 +12,7 @@ module ModelStack
       attr_accessor :name
       attr_accessor :description
       attr_accessor :attributes
+      attr_accessor :primary_key
 
 
       ############################
@@ -44,7 +45,7 @@ module ModelStack
       end
 
       def default_primary_key
-        puts "handle default_primary_key"
+        self.primary_key = self.generator.default_primary_key
       end
 
       def attribute(identifier, options)

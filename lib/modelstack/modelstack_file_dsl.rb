@@ -77,13 +77,21 @@ module ModelStack
 
     def model(model_identifier, &block)
       model = ModelStackFileDslMethods::Model.handle(self.generator, model_identifier, block)
-
-      self.generator.models ||= []
       self.generator.models << model
     end
 
+    def controller(identifier, options = {}, &block)
+      controller = ModelStackFileDslMethods::Controller.handle(self.generator, identifier, options, block)
+      self.generator.default_scope.controllers << controller
+    end
+
+    def resources(identifier, options = {}, &block)
+      puts "handle resources #{identifier}, options #{options} block #{block}"
+    end
+
     def scope(options, &block)
-      puts "handle scope #{options} with block #{block}".yellow
+      scope = ModelStackFileDslMethods::Scope.handle(self.generator, options, block)
+      self.generator.scopes << scope
     end
 
   end

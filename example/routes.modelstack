@@ -1,3 +1,9 @@
+resources :users
+
+controller :users, model: :user do
+  action :search, http_method: :get, on: :collection
+end
+
 scope path: 'api' do
 
   resources :users do
@@ -5,8 +11,18 @@ scope path: 'api' do
     resources :sessions
   end
 
+  controller :users, model: :user do
+    action :search, http_method: :get, on: :collection
+  end
+
   resources :groups do
     resources :users
+  end
+
+  scope path: 'admin' do
+    controller :main do
+      action :index
+    end
   end
 
 end
