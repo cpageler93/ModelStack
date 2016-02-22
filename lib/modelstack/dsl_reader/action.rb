@@ -1,12 +1,16 @@
 module ModelStack
-  module ModelStackFileDslMethods
-    class ActionReader
+  module DSLReader
+    class Action
 
       def self.read_action(identifier, options)
-        ma = ModelStack::ModelStackAction.new
+        ma = ModelStack::DSLClass::Action.new
+
         ma.identifier = identifier
         ma.http_method = options[:http_method]
         ma.on = options[:on]
+
+        ma.set_defaults
+
         return ma
       end
 

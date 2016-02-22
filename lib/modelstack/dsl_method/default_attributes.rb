@@ -1,5 +1,5 @@
 module ModelStack
-  module ModelStackFileDslMethods
+  module DSLMethod
     class DefaultAttributes
 
       attr_accessor :generator
@@ -11,8 +11,8 @@ module ModelStack
       end
 
       def attribute(identifier, options)
-        self.generator.default_attributes ||= []
-        self.generator.default_attributes << AttributeReader.read_attribute(identifier, options)
+        a = ModelStack::DSLReader::Attribute.read_attribute(identifier, options)
+        self.generator.default_attributes << a
       end
 
     end

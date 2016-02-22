@@ -20,9 +20,10 @@ module ModelStack
 
     def initialize
       self.modelstack_files = []
+      self.default_scope = ModelStack::DSLClass::Scope.new
+      self.default_scope.path = "/"
 
-      self.default_scope = ModelStackFileDslMethods::Scope.new
-
+      self.default_attributes = []
       self.models = []
       self.scopes = [self.default_scope]
     end
@@ -35,27 +36,7 @@ module ModelStack
     def generate
       obj = {
         name: self.name,
-        # controllers: self.controllers.collect{|c|{
-        #   identifier: c.identifier,
-        #   model: c.model,
-        #   actions: c.actions.collect{|a|{
-        #     identifier: a.identifier,
-        #     http_method: a.http_method,
-        #     on: a.on
-        #   }}
-        # }},
-        scopes: self.scopes.collect{|s|{
-          path: s.path,
-          controllers: s.controllers.collect{|c|{
-            identifier: c.identifier,
-            model: c.model,
-            actions: c.actions.collect{|a|{
-              identifier: a.identifier,
-              http_method: a.http_method,
-              on: a.on
-            }}
-          }}
-        }}
+        scopes: self.scopes.collect{|s| s.description_object},
         # default_attributes: self.default_attributes.collect{|m|{
         #   identifier: m.identifier,
         #   type: m.type,
@@ -63,9 +44,9 @@ module ModelStack
         # }},
         # default_primary_key: self.default_primary_key,
         # models: self.models.collect{|m|{
-        #   identifier: m.get_identifier,
-        #   name: m.get_name,
-        #   description: m.get_description,
+        #   identifier: m.identifier,
+        #   name: m.name,
+        #   description: m.description,
         #   attributes: m.attributes.collect{|a|{
         #     identifier: a.identifier,
         #     type: a.type,

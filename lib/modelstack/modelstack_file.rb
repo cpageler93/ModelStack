@@ -44,7 +44,7 @@ module ModelStack
       # TODO: check file exists
       self.generator.add_modelstack_file(self.modelstack_filename)
 
-      ModelStackFileDsl.new(self.generator, self.modelstack_filename)
+      ModelStack::DSLMethod::ModelStackFile.new(self.generator, self.modelstack_filename)
     end
 
     def generate
