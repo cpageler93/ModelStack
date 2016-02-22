@@ -15,6 +15,10 @@ module ModelStack
 
       ############################
 
+      def initialize
+        self.actions = []
+      end
+
       def self.handle(generator, identifier, options, block)
         controller = Controller.new
         controller.generator = generator
@@ -27,9 +31,9 @@ module ModelStack
         return controller
       end
 
-      def action(action_identifier, options)
-        self.actions ||= []
-        self.actions << ActionReader.read_action(action_identifier, options)
+      def action(action_identifier, options = {})
+        action = ActionReader.read_action(action_identifier, options)
+        self.actions << action
       end
 
     end

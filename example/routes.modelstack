@@ -1,28 +1,32 @@
-resources :users
-
-controller :users, model: :user do
-  action :search, http_method: :get, on: :collection
+resources :users do
+  action :me
+  resources :sessions
 end
+# resources :users
 
-scope path: 'api' do
+# controller :users, model: :user do
+#   action :search, http_method: :get, on: :collection
+# end
 
-  resources :users do
-    action :me
-    resources :sessions
-  end
+# scope path: 'api' do
 
-  controller :users, model: :user do
-    action :search, http_method: :get, on: :collection
-  end
+#   resources :users do
+#     action :me
+#     resources :sessions
+#   end
 
-  resources :groups do
-    resources :users
-  end
+#   controller :users, model: :user do
+#     action :search, http_method: :get, on: :collection
+#   end
 
-  scope path: 'admin' do
-    controller :main do
-      action :index
-    end
-  end
+#   resources :groups do
+#     resources :users
+#   end
 
-end
+#   scope path: 'admin' do
+#     controller :main do
+#       action :index
+#     end
+#   end
+
+# end

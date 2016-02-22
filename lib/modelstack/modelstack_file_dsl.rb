@@ -86,7 +86,8 @@ module ModelStack
     end
 
     def resources(identifier, options = {}, &block)
-      puts "handle resources #{identifier}, options #{options} block #{block}"
+      resources = ModelStackFileDslMethods::Resources.handle(self.generator, identifier, options, block);
+      # puts "handle resources #{identifier}, options #{options} block #{block}"
     end
 
     def scope(options, &block)
