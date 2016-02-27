@@ -41,7 +41,7 @@ module ModelStack
           a.on          == action.on
         end).length > 0
 
-        raise "Duplicated action #{action.identifier} in controller #{self.identifier}" if duplicated
+        raise "Duplicated action ´#{action.identifier}´ in controller ´#{self.identifier}´" if duplicated
 
         self.actions << action
 

@@ -89,9 +89,7 @@ module ModelStack
       end
 
       def scope(options, &block)
-        puts "handle scope"
-        # scope = ModelStackFileDslMethods::Scope.handle(self.generator, options, block)
-        # self.generator.scopes << scope
+        ModelStack::DSLMethod::Scope.handle_in_scope(self.generator, options, block)
       end
 
     end
