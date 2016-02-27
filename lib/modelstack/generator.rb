@@ -37,23 +37,23 @@ module ModelStack
       obj = {
         name: self.name,
         scopes: self.scopes.collect{|s| s.description_object},
-        # default_attributes: self.default_attributes.collect{|m|{
-        #   identifier: m.identifier,
-        #   type: m.type,
-        #   nullable: m.nullable
-        # }},
-        # default_primary_key: self.default_primary_key,
-        # models: self.models.collect{|m|{
-        #   identifier: m.identifier,
-        #   name: m.name,
-        #   description: m.description,
-        #   attributes: m.attributes.collect{|a|{
-        #     identifier: a.identifier,
-        #     type: a.type,
-        #     nullable: a.nullable
-        #   }},
-        #   primary_key: m.primary_key
-        # }}
+        default_attributes: self.default_attributes.collect{|m|{
+          identifier: m.identifier,
+          type: m.type,
+          nullable: m.nullable
+        }},
+        default_primary_key: self.default_primary_key,
+        models: self.models.collect{|m|{
+          identifier: m.identifier,
+          name: m.name,
+          description: m.description,
+          attributes: m.attributes.collect{|a|{
+            identifier: a.identifier,
+            type: a.type,
+            nullable: a.nullable
+          }},
+          primary_key: m.primary_key
+        }}
       }
       puts "generate #{JSON.pretty_generate(obj)}"
     end

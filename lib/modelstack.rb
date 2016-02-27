@@ -26,6 +26,7 @@ require 'modelstack/generator.rb'
 require 'colored'
 require 'commander'
 require 'terminal-table'
+require 'active_support/inflector'
 
 module ModelStack
 end

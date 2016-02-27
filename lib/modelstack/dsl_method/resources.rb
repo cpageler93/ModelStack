@@ -40,9 +40,9 @@ module ModelStack
           r.controller = c_class
         else
           r.controller.identifier = identifier
+          r.controller.model = identifier.to_s.singularize
         end
 
-        # TODO: set model for controller
         r.load_actions_with_options(options)
 
         if block
