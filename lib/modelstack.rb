@@ -15,6 +15,7 @@ require 'modelstack/dsl_class/attribute.rb'
 require 'modelstack/dsl_class/scope.rb'
 require 'modelstack/dsl_class/model.rb'
 require 'modelstack/dsl_class/controller.rb'
+require 'modelstack/dsl_class/generator.rb'
 
 require 'modelstack/dsl_reader/action.rb'
 require 'modelstack/dsl_reader/attribute.rb'
