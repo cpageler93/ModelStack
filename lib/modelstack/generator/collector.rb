@@ -2,7 +2,7 @@ require 'json'
 
 module ModelStack
   module Generator
-    class Base
+    class Collector
 
       attr_accessor :modelstack_files
       attr_accessor :generators
@@ -29,7 +29,7 @@ module ModelStack
       end
 
       def add_modelstack_file(modelstack_filename)
-        raise GeneratorException.new "ModelStack file #{File.basename(modelstack_filename)} added twice" if self.modelstack_files.include?(modelstack_filename)
+        raise CollectorException.new "ModelStack file #{File.basename(modelstack_filename)} added twice" if self.modelstack_files.include?(modelstack_filename)
         self.modelstack_files << modelstack_filename
       end
 
@@ -86,6 +86,6 @@ module ModelStack
     end
   end
 
-  class GeneratorException < Exception
+  class CollectorException < Exception
   end
 end

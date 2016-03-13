@@ -11,7 +11,7 @@ module ModelStack
 
       # apply option defaults
       options = {
-        :generator => ModelStack::Generator::Base.new,
+        :generator => ModelStack::Generator::Collector.new,
         :modelstack_filename => absolute_modelstack_filename(Dir.getwd, nil)
       }.merge(options)
 

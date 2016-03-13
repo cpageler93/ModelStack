@@ -20,7 +20,8 @@ require 'modelstack/dsl_class/generator.rb'
 require 'modelstack/dsl_reader/action.rb'
 require 'modelstack/dsl_reader/attribute.rb'
 
-require 'modelstack/generator.rb'
+require 'modelstack/generator/collector.rb'
+require 'modelstack/generator/base.rb'
 
 
 # third party code
