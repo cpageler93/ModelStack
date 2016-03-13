@@ -29,7 +29,7 @@ module ModelStack
       end
 
       def add_modelstack_file(modelstack_filename)
-        raise CollectorException.new "ModelStack file #{File.basename(modelstack_filename)} added twice" if self.modelstack_files.include?(modelstack_filename)
+        raise CollectorException.new "ModelStack file ´#{File.basename(modelstack_filename)}´ added twice" if self.modelstack_files.include?(modelstack_filename)
         self.modelstack_files << modelstack_filename
       end
 
@@ -71,8 +71,18 @@ module ModelStack
         # puts "generate #{JSON.pretty_generate(obj)}"
 
         self.generators.each do |generator|
-          class_name = "ModelStack::Generator::#{generator.name}"
-          clazz = class_name.constantize
+
+          # generate class name
+          class_name = generator.name.capitalize
+          class_in_namespace = "ModelStack::Generator::#{class_name}"
+
+          # try to constantize
+          clazz = nil
+          begin
+            clazz = class_in_namespace.constantize
+          rescue Exception => ex
+            raise CollectorException.new "Generator class with name ´#{class_name}´ was not found"
+          end
 
           clazz.generate({
             name: self.name,
