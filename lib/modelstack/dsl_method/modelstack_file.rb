@@ -92,8 +92,8 @@ module ModelStack
         ModelStack::DSLMethod::Scope.handle_in_scope(self.generator, options, block)
       end
 
-      def generate(generator_name, options = {})
-        self.generator.generators << ModelStack::DSLClass::Generator.new(generator_name, options)
+      def generate(generator_name, options = {}, &block)
+        self.generator.generators << ModelStack::DSLClass::Generator.new(generator_name, options, block)
       end
 
     end

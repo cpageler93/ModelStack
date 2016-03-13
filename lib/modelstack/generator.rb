@@ -74,12 +74,12 @@ module ModelStack
           class_name = "ModelStack::Generator::#{generator.name}"
           clazz = class_name.constantize
 
-          generator_instance = clazz.generate({
+          clazz.generate({
             name: self.name,
             models: self.models,
             scopes: self.scopes,
             default_scope: self.default_scope
-          })
+          }, generator.options, generator.block)
         end
       end
 
