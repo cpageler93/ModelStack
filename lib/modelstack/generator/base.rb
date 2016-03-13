@@ -27,6 +27,10 @@ module ModelStack
         def set_default_attributes
         end
 
+        def create_output_folder
+          `mkdir -p #{self.absolute_output_path}`
+        end
+
         # give the ability to override this method
         def handle_options(options)
           raise GeneratorBaseException.new "handle(options) not implemented in modelstack generator class #{self.class.name}"
@@ -58,6 +62,9 @@ module ModelStack
 
           # set attributes to default values if not set
           gen.set_default_attributes
+
+          # create output folder
+          gen.create_output_folder
 
           # start generation
           gen.generate(data_model)
