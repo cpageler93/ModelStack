@@ -5,7 +5,7 @@ Generates code for server and client applications
 
 # Installation
 
-  sudo gem install modelstack
+    sudo gem install modelstack
 
 # Example
 
