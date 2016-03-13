@@ -40,7 +40,7 @@ scope path: 'api' do
   
 end
 
-generate 'Rails' do
+generate 'rails' do
   output_to 'generated/rails'
 end
 ```
