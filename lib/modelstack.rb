@@ -29,6 +29,7 @@ require 'colored'
 require 'commander'
 require 'terminal-table'
 require 'active_support/inflector'
+require 'powerbar'
 
 module ModelStack
 end

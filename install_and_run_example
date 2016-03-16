@@ -1,9 +1,10 @@
-#!/usr/bin/env ruby
+#!/bin/bash
 
-puts `gem build modelstack.gemspec`   # build the gem
-gem_name = `ls modelstack*.gem`       # get gem name
-puts `gem install #{gem_name}`      # install the gem
-puts `rm #{gem_name}`               # remove gem file
+gem build modelstack.gemspec          # build the gem
+gem_name=`ls modelstack*.gem`         # get gem name
+gem install $gem_name                 # install the gem
+rm $gem_name                          # remove gem file
 
 # test modelkit
-puts `cd example && modelstack`
+cd example && modelstack
+cd ..
