@@ -48,28 +48,6 @@ module ModelStack
       end
 
       def generate
-        # obj = {
-        #   name: self.name,
-        #   scopes: self.scopes.collect{|s| s.description_object},
-        #   default_attributes: self.default_attributes.collect{|m|{
-        #     identifier: m.identifier,
-        #     type: m.type,
-        #     nullable: m.nullable
-        #   }},
-        #   default_primary_key: self.default_primary_key,
-        #   models: self.models.collect{|m|{
-        #     identifier: m.identifier,
-        #     name: m.name,
-        #     description: m.description,
-        #     attributes: m.attributes.collect{|a|{
-        #       identifier: a.identifier,
-        #       type: a.type,
-        #       nullable: a.nullable
-        #     }},
-        #     primary_key: m.primary_key
-        #   }}
-        # }
-        # puts "generate #{JSON.pretty_generate(obj)}"
 
         # define data model
         data_model = {
@@ -100,63 +78,61 @@ module ModelStack
         end
 
         # setup and start progress bar
-        p = PowerBar.new
-        log = Logger.new(STDOUT)
-        p.settings.notty.finite.output = Proc.new { |s|
-          log.debug(s.chomp) unless s == ''
-        }
+        p = ProgressBar.create(
+          :format => '%t: %B %p%% %a %E',
+          :total => number_of_total_steps,
+          :autofinish => false
+        )
 
-        p.show(:msg => "start generation", :done => 0, :total => number_of_total_steps)
+        p.log "start generation"
 
+        # enumerate all generators with index
         self.generators.each_with_index do |generator, generator_index|
+
+          # get generator classes
           dsl_class_generator = self.generators[generator_index]
           generator_instance = generator_instances[generator_index]
 
           # set up some variables
+          generator_name = dsl_class_generator.name
           current_number_of_steps = generator_instance.number_of_steps
           current_number_of_steps_done = 0
           current_total_done = 0
+          default_message = "generate #{generator_name}"
 
-          default_message = "generate #{dsl_class_generator.name}"
-          last_message = nil
+          # prepare generator callbacks
+          generator_instance.set_update_to_step_block do |step|
+            current_number_of_steps_done = step
+            current_total_done = number_of_total_steps_done + current_number_of_steps_done
+
+            p.progress = current_total_done
+          end
+
+          generator_instance.set_update_title_block do |title|
+            p.title = "#{default_message}: #{title}"
+          end
+
+          generator_instance.set_log_message_block do |log|
+            p.log "#{default_message}: #{log}"
+          end
 
           # show generation start
-          p.show(:msg => default_message)
-
-          # prepare update user info block block
-          generator_instance.set_user_info_block do |options|
-            step = options[:step]
-            message = options[:message]
-
-            if step
-              current_number_of_steps_done = step
-              current_total_done = number_of_total_steps_done + current_number_of_steps_done
-            end
-
-            current_message = default_message
-            if message
-              last_message = message
-            end
-
-            if last_message
-              current_message = "#{current_message}: #{last_message}"
-            end
-
-            p.show(:msg => current_message, :done => current_total_done)
-          end
+          p.title = default_message
+          p.log default_message
 
           # start generation
           generator_instance.generate
 
-          p.print("generator #{dsl_class_generator.name} done")
+          p.log "#{default_message}: done"
 
           # update total number
           number_of_total_steps_done += current_number_of_steps
         end
 
-        p.print("all generators done")
+        p.format = '%t: %B %p%% %a'
+        p.title = "generation done"
 
-        p.close
+        p.finish
       end
 
       def create_generator_instance(dsl_class_generator, data_model)

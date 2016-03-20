@@ -18,11 +18,11 @@ Gem::Specification.new do |s|
   s.executables   = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency 'commander', '= 4.3.5'       # CLI parser
-  s.add_dependency 'colored', '= 1.2'           # coloured terminal output
-  s.add_dependency 'terminal-table', '= 1.4.5'  # actions documentation
-  s.add_dependency 'activesupport', '= 4.2.5'   # active support from rails
-  s.add_dependency 'powerbar', '= 1.0.17'       # progress bar for CLI
+  s.add_dependency 'commander', '= 4.3.5'        # CLI parser
+  s.add_dependency 'colored', '= 1.2'            # coloured terminal output
+  s.add_dependency 'terminal-table', '= 1.4.5'   # actions documentation
+  s.add_dependency 'activesupport', '= 4.2.5'    # active support from rails
+  s.add_dependency 'ruby-progressbar', '= 1.7.5' # CLI progress bar
 
   # Development only
   s.add_development_dependency 'bundler', '= 1.11.2'

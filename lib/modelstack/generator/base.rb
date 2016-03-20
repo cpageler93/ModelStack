@@ -12,7 +12,9 @@ module ModelStack
         attr_accessor :absolute_output_path
         attr_accessor :data_model
 
-        attr_accessor :user_info_block
+        attr_accessor :update_to_step_block
+        attr_accessor :update_title_block
+        attr_accessor :log_message_block
 
         def initialize(data_model, options, generator_block)
 
@@ -60,12 +62,28 @@ module ModelStack
           `mkdir -p #{self.absolute_output_path}`
         end
 
-        def set_user_info_block(&block)
-          self.user_info_block = block
+        def set_update_to_step_block(&block)
+          self.update_to_step_block = block
         end
 
-        def update_user_info(options)
-          self.user_info_block.call(options)
+        def set_update_title_block(&block)
+          self.update_title_block = block
+        end
+
+        def set_log_message_block(&block)
+          self.log_message_block = block
+        end
+
+        def update_to_step(step)
+          self.update_to_step_block.call(step)
+        end
+
+        def update_title(title)
+          self.update_title_block.call(title)
+        end
+
+        def log_message(message)
+          self.log_message_block.call(message)
         end
 
         ###############################

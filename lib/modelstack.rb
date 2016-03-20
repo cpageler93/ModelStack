@@ -29,7 +29,7 @@ require 'colored'
 require 'commander'
 require 'terminal-table'
 require 'active_support/inflector'
-require 'powerbar'
+require 'ruby-progressbar'
 
 module ModelStack
 end
