@@ -12,6 +12,16 @@ module ModelStack
         self.attributes = []
       end
 
+      def as_json
+        {
+          identifier: self.identifier,
+          name: self.name,
+          description: self.description,
+          attributes: self.attributes,
+          primary_key: self.primary_key
+        }
+      end
+
     end
   end
 end

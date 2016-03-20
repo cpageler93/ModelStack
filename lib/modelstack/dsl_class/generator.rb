@@ -12,6 +12,13 @@ module ModelStack
         self.block = block
       end
 
+      def as_json
+        {
+          name: self.name,
+          options: self.options
+        }
+      end
+
     end
   end
 end

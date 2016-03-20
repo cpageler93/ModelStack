@@ -47,6 +47,15 @@ module ModelStack
 
       end
 
+      def as_json
+        {
+          identifier: self.identifier,
+          model: self.model,
+          actions: self.actions,
+          child_controllers: self.child_controllers
+        }
+      end
+
     end
   end
 end

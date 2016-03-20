@@ -29,6 +29,13 @@ module ModelStack
         return rt
       end
 
+      def as_json
+        {
+          path: self.path,
+          controllers: self.controllers
+        }
+      end
+
     end
   end
 end

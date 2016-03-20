@@ -20,6 +20,14 @@ module ModelStack
         }
       end
 
+      def as_json
+        {
+          identifier: self.identifier,
+          http_method: self.http_method,
+          on: self.on
+        }
+      end
+
     end
   end
 end
