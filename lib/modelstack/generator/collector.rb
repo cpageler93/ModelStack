@@ -84,7 +84,9 @@ module ModelStack
           :autofinish => false
         )
 
-        p.log "start generation"
+        p.log "##################################################"
+        p.log "#                start generation                #"
+        p.log "##################################################"
 
         # enumerate all generators with index
         self.generators.each_with_index do |generator, generator_index|
@@ -98,7 +100,7 @@ module ModelStack
           current_number_of_steps = generator_instance.number_of_steps
           current_number_of_steps_done = 0
           current_total_done = 0
-          default_message = "generate #{generator_name}"
+          default_message = "#{generator_name}"
 
           # prepare generator callbacks
           generator_instance.set_update_to_step_block do |step|
@@ -109,11 +111,11 @@ module ModelStack
           end
 
           generator_instance.set_update_title_block do |title|
-            p.title = "#{default_message}: #{title}"
+            p.title = "#{default_message} - #{title}"
           end
 
           generator_instance.set_log_message_block do |log|
-            p.log "#{default_message}: #{log}"
+            p.log "#{default_message} - #{log}"
           end
 
           # show generation start
@@ -123,16 +125,21 @@ module ModelStack
           # start generation
           generator_instance.generate
 
-          p.log "#{default_message}: done"
+          p.log "#{default_message} - done"
 
           # update total number
           number_of_total_steps_done += current_number_of_steps
         end
 
         p.format = '%t: %B %p%% %a'
-        p.title = "generation done"
+        p.title = "done"
 
         p.finish
+
+        p.log "#################################################"
+        p.log "#                generation done                #"
+        p.log "#################################################"
+
       end
 
       def create_generator_instance(dsl_class_generator, data_model)

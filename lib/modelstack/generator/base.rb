@@ -16,6 +16,8 @@ module ModelStack
         attr_accessor :update_title_block
         attr_accessor :log_message_block
 
+        attr_accessor :current_step
+
         def initialize(data_model, options, generator_block)
 
           # handle global base options
@@ -35,6 +37,8 @@ module ModelStack
 
           # store data model
           self.data_model = data_model
+
+          self.current_step = 0
 
         end
 
@@ -76,6 +80,11 @@ module ModelStack
 
         def update_to_step(step)
           self.update_to_step_block.call(step)
+          self.current_step = step
+        end
+
+        def inc_step
+          update_to_step(self.current_step + 1)
         end
 
         def update_title(title)
