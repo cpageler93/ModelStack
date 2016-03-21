@@ -47,15 +47,25 @@ module ModelStack
         # check generator names
       end
 
+      def deep_data_model
+        {
+          name: self.name,
+          models: self.models.collect{|m|m.as_json},
+          scopes: self.scopes.collect{|s|s.as_json}
+        }
+      end
+
       def generate
 
         # define data model
         data_model = {
           name: self.name,
           models: self.models,
-          scopes: self.scopes,
-          default_scope: self.default_scope
+          scopes: self.scopes
         }
+
+        # puts deep_data_model.to_json
+        # return
 
         # constantize all generators
         generator_instances = []
@@ -151,11 +161,15 @@ module ModelStack
         clazz = nil
         begin
           clazz = class_in_namespace.constantize
-        rescue Exception => ex
+        rescue Exception
           raise CollectorException.new "Generator class with name ´#{class_name}´ was not found"
         end
 
         generator_instance = clazz.new(data_model, dsl_class_generator.options, dsl_class_generator.block)
+
+        gem_name = eval("ModelStack::Generator::#{class_name}::NAME")
+        spec = Gem::Specification.find_by_name(gem_name)
+        generator_instance.absolute_gem_path = spec.gem_dir
 
         return generator_instance
       end

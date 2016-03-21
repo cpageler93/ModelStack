@@ -17,7 +17,7 @@ module ModelStack
           identifier: self.identifier,
           name: self.name,
           description: self.description,
-          attributes: self.attributes,
+          attributes: self.attributes.collect{|a|a.as_json},
           primary_key: self.primary_key
         }
       end

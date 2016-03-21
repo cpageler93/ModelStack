@@ -12,15 +12,6 @@ module ModelStack
         self.child_controllers = []
       end
 
-      def description_object
-        {
-          identifier: self.identifier,
-          model: self.model,
-          actions: self.actions.collect{|a| a.description_object },
-          child_controllers: self.child_controllers.collect{|cc| cc.description_object }
-        }
-      end
-
       def child_controller_with_identifier(identifier)
         rt = nil
 
@@ -51,8 +42,8 @@ module ModelStack
         {
           identifier: self.identifier,
           model: self.model,
-          actions: self.actions,
-          child_controllers: self.child_controllers
+          actions: self.actions.collect{|a|a.as_json},
+          child_controllers: self.child_controllers.collect{|cc|cc.as_json}
         }
       end
 

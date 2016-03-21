@@ -9,13 +9,6 @@ module ModelStack
         self.controllers = []
       end
 
-      def description_object
-        {
-          path: self.path,
-          controllers: self.controllers.collect{|c| c.description_object }
-        }
-      end
-
       def controller_with_identifier(identifier)
         rt = nil
 
@@ -32,7 +25,7 @@ module ModelStack
       def as_json
         {
           path: self.path,
-          controllers: self.controllers
+          controllers: self.controllers.collect{|c|c.as_json}
         }
       end
 

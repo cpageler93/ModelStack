@@ -9,6 +9,8 @@ module ModelStack
 
       module InstanceMethods
 
+        attr_accessor :absolute_gem_path
+
         attr_accessor :absolute_output_path
         attr_accessor :data_model
 
