@@ -117,6 +117,8 @@ module ModelStack
             current_number_of_steps_done = step
             current_total_done = number_of_total_steps_done + current_number_of_steps_done
 
+            # p.log "step #{step} of #{current_number_of_steps}"
+
             p.progress = current_total_done
           end
 
